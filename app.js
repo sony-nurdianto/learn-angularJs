@@ -16,6 +16,14 @@ myApp.config(function ($routeProvider) {
 })
 
 
+myApp.directive('firstPage', function () {
+    return {
+        restrict: 'E',
+        templateUrl: './pages/first/first.html'
+    };
+})
+
+
 myApp.service('nameService', function () {
     var self = this;
 
@@ -42,6 +50,8 @@ myApp.controller('mainController', ['$scope', '$timeout', '$http', '$log', '$loc
         year: ''
     }
 
+    $scope.loading = true
+
     $scope.move = function () {
         $location.path('/second')
     }
@@ -59,6 +69,7 @@ myApp.controller('mainController', ['$scope', '$timeout', '$http', '$log', '$loc
         url: 'https://remembering-golang.herokuapp.com/books'
     }).then(function successCallback(response) {
         $scope.books = response.data
+        $scope.loading = false
         $log.log($scope.books.length)
     }, function errorCallback(response) {
         $logS.log(response)
